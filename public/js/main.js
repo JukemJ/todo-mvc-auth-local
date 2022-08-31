@@ -2,6 +2,7 @@ const deleteBtn = document.querySelectorAll('.del')
 const todoItem = document.querySelectorAll('span.not')
 const todoComplete = document.querySelectorAll('span.completed')
 
+//event listeners for deletes, updates
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
 })
@@ -14,6 +15,7 @@ Array.from(todoComplete).forEach((el)=>{
     el.addEventListener('click', markIncomplete)
 })
 
+//function for sending delete request
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id
     try{
@@ -32,6 +34,7 @@ async function deleteTodo(){
     }
 }
 
+//functions for sending update requests
 async function markComplete(){
     const todoId = this.parentNode.dataset.id
     try{

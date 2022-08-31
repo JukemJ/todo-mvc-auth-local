@@ -15,10 +15,10 @@ require('dotenv').config({path: './config/.env'})
 // Passport config
 require('./config/passport')(passport)
 
-connectDB()
+connectDB() // connect to database
 
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
+app.set('view engine', 'ejs')                   //render pages in express
+app.use(express.static('public'))               //express render folder
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))

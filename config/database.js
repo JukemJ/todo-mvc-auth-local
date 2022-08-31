@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const connectDB = async () => {
+  //connect to database
   try {
     const conn = await mongoose.connect(process.env.DB_STRING, {
       useNewUrlParser: true,
@@ -10,6 +11,7 @@ const connectDB = async () => {
     })
 
     console.log(`MongoDB Connected: ${conn.connection.host}`)
+    //log errors
   } catch (err) {
     console.error(err)
     process.exit(1)

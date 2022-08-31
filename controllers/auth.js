@@ -2,6 +2,8 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require('../models/User')
 
+
+//initial login page get request
  exports.getLogin = (req, res) => {
     if (req.user) {
       return res.redirect('/todos')
@@ -11,6 +13,7 @@ const User = require('../models/User')
     })
   }
   
+  //check for valid user name and password combination
   exports.postLogin = (req, res, next) => {
     const validationErrors = []
     if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' })
@@ -36,6 +39,7 @@ const User = require('../models/User')
     })(req, res, next)
   }
   
+  //logging out user
   exports.logout = (req, res) => {
     req.logout(() => {
       console.log('User has logged out.')
@@ -47,15 +51,17 @@ const User = require('../models/User')
     })
   }
   
+  
   exports.getSignup = (req, res) => {
-    if (req.user) {
+    if (req.user) { //if user logged in take them to home page
       return res.redirect('/todos')
     }
-    res.render('signup', {
+    res.render('signup', { //else take them to signup page
       title: 'Create Account'
     })
   }
   
+  //user sign-up post request
   exports.postSignup = (req, res, next) => {
     const validationErrors = []
     if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' })
@@ -77,7 +83,7 @@ const User = require('../models/User')
     User.findOne({$or: [
       {email: req.body.email},
       {userName: req.body.userName}
-    ]}, (err, existingUser) => {
+    ]}, (err, existingUser) => {    //existing user check
       if (err) { return next(err) }
       if (existingUser) {
         req.flash('errors', { msg: 'Account with that email address or username already exists.' })

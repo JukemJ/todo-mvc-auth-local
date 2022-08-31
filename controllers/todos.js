@@ -1,11 +1,11 @@
 const Todo = require('../models/Todo')
 
-module.exports = {
+module.exports = {  //getting list of todos
     getTodos: async (req,res)=>{
         console.log(req.user)
         try{
-            const todoItems = await Todo.find({userId:req.user.id})
-            const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})
+            const todoItems = await Todo.find({userId:req.user.id})                                 //get array of todos
+            const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})      //get number of things left to do
             res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user})
         }catch(err){
             console.log(err)
@@ -13,7 +13,7 @@ module.exports = {
     },
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
+            await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})     //creates new todo document and inserts to db
             console.log('Todo has been added!')
             res.redirect('/todos')
         }catch(err){
@@ -22,7 +22,7 @@ module.exports = {
     },
     markComplete: async (req, res)=>{
         try{
-            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
+            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{                           //marking todo as completed in db
                 completed: true
             })
             console.log('Marked Complete')
@@ -33,7 +33,7 @@ module.exports = {
     },
     markIncomplete: async (req, res)=>{
         try{
-            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
+            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{                           //marking todo as not completed in db
                 completed: false
             })
             console.log('Marked Incomplete')
@@ -45,7 +45,7 @@ module.exports = {
     deleteTodo: async (req, res)=>{
         console.log(req.body.todoIdFromJSFile)
         try{
-            await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})
+            await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})                        //deleting todo
             console.log('Deleted Todo')
             res.json('Deleted It')
         }catch(err){
