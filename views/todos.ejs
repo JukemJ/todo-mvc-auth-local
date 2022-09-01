@@ -9,14 +9,20 @@
 </head>
 <body>
     <h1>Todos</h1>
-    <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
-                <span class='del'> Delete </span>
-            </li>
-    <% }) %>    
+    <ul class="slide-container">
+        <% todos.forEach( el => { %>
+            <div class="slide">
+                <li class='todoItem' data-id='<%=el._id%>'>
+                    <span class='<%= el.completed === true ? 'completed' : 'not'%>'><img src='<%= el.todo %>'></span>
+                    <span class='del'> Delete </span>
+                </li>
+            </div>
+        <% }) %>
     </ul>
+    
+    <button class="btn btn-next"></button>
+    <button class="btn btn-prev"></button>
+    
 
     <h2><%= user.userName %> has <%= left %> things left to do.</h2>
 
