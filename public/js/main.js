@@ -29,6 +29,7 @@ async function deleteTodo(){
         })
         const data = await response.json()
         console.log(data)
+        goToNextCard()
         location.reload()
     }catch(err){
         console.log(err)
@@ -72,27 +73,34 @@ async function markIncomplete(){
     }
 }
 
+function formatSearchCards() {
+    const slides = document.querySelectorAll(".slide");
+
+    slides.forEach((slide, indx) => {
+        slide.style.transform = `translateX(${indx * 100}%)`;
+    });
+}
+
 // Select all slides
 const slides = document.querySelectorAll(".slide");
 
 // Loop through slides and set each slide's translateX property to index * 100%
-slides.forEach()((slide, indx) => {
+slides.forEach((slide, indx) => {
     slide.style.transform = `translateX(${indx * 100}%)`;
 });
-
-// Select next slide button
-const nextSlide = document.querySelector(".btn-next");
 
 // Current slide counter
 let curSlide = 0;
 
-//Maximum number of slides
-let maxSlide = slides.length -1;
+// Select next slide button
+const nextSlide = document.querySelector(".btn-next");
 
-// Add event listener and navigation functionality
-nextSlide.addEventListener("click", function () {
-    // Check if current slide is the last and reset current slide
-    if (curSlide === maxSlide) {
+//Add event listener and navigation functionality
+nextSlide.addEventListener("click", goToNextCard);
+
+function goToNextCard() {
+    //Check if current slide is the last and reset current slide
+    if (curSlide == maxSlide) {
         curSlide = 0;
     } else {
         curSlide++;
@@ -100,12 +108,13 @@ nextSlide.addEventListener("click", function () {
 
     // Move slide by -100%
     slides.forEach((slide, indx) => {
-        slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
+        slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`
     });
-});
+}
+
 
 // Select prev slide button
-const prevSlide = document.querySelector(".btn-prev");
+const prevSlide = document.querySelector(".btn-prev")
 
 // Add event listener and navigation functionality
 prevSlide.addEventListener("click", function () {
@@ -118,6 +127,9 @@ prevSlide.addEventListener("click", function () {
 
     // Move slide by 100%
     slides.forEach((slide, indx) => {
-        slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
+        slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`
     });
 });
+
+// Maximum number of slides
+let maxSlide = slides.length - 1;
